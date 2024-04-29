@@ -1,22 +1,41 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import "../../styles/home.css";
+import { Context } from "../store/appContext";
 
-export const Home = () => (
-  <div className="text-center mt-5">
-    {
-      <div>
-        <img alt="render a pic here"></img>
+
+export const Home = () => {
+  const { store, actions } = useContext(Context);
+  
+  useEffect(() => {
+    actions.getContacts("rikrdoLeal");
+  }, []);
+
+  console.log(store.contacts.contacts);
+  
+  if (!(store.contacts && store.contacts.contacts)) return null;
+
+  return (
+    <div className="text-center mt-5">
         <div>
-          <h2>name</h2>
-          <h4>phone</h4>
-          <h4>email</h4>
-          <h4>address</h4>
+          <h1>Lista de Contactos</h1>
+          {
+          store.contacts.contacts.map(item =>
+          <ul key={item.id}>
+                <li>
+                  {item.name}
+                </li>
+                <li>
+                  {item.phone}
+                </li>
+                <li>
+                  {item.email}
+                </li>
+                <li>
+                  {item.address}
+                </li>
+          </ul>
+          )}
         </div>
-        <div>
-          <button>edit</button>
-          <button>delete</button>
-        </div>
-      </div>
-    }
-  </div>
-);
+    </div>
+  );
+};
