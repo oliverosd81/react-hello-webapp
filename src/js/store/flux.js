@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // Función para obtener los contactos guardados en la API
+      // función para crear el usuario
       createUser: async (userId) => {
         const getUser = getActions().getUser;
 
@@ -46,6 +46,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
+      // Función para obtener los contactos guardados en la API
+      // en caso de que el usuario no exista, se crea (llamando a la funcion createUser)
       getUser: async (userId) => {
         const createUser = getActions().createUser;
         await fetch(`https://playground.4geeks.com/contact/agendas/${userId}`)
@@ -61,8 +63,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch((err) => console.log(err));
       },
 
+      // Función para obtener los contactos de un usuario
       getContacts: async (userId) => {
-
         const resp = await fetch(
           `https://playground.4geeks.com/contact/agendas/${userId}/contacts`,
           {
@@ -77,51 +79,60 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ contacts: data });
       },
 
+      // función para editar un contacto
       editContact: async (userId, contactId, contactData) => {
-        console.log("Editing contact", contactId, "for user", userId, "with data:", contactData);
-        console.log("UserId", userId.slug)
+        console.log(
+          "Editing contact",
+          contactId,
+          "for user",
+          userId,
+          "with data:",
+          contactData
+        );
+        console.log("UserId", userId.slug);
 
         const response = await fetch(
-            `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
-            {
-                method: "PUT",
-                body: JSON.stringify(contactData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+          `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(contactData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
-    
+
         const data = await response.json();
         console.log("Server answer", data);
-    
-        if (response.ok) {
-            alert("Contact successfully edited.");
-        }
-    
-        return data;
-    },
 
-    deleteContact: async (userId, contactId) => {
+        if (response.ok) {
+          alert("Contact successfully edited.");
+        }
+
+        return data;
+      },
+
+      // función para eliminar un contacto
+      // ojo esta función aun no funciona... PENDIENTE
+      deleteContact: async (userId, contactId) => {
         console.log("Deleting contact", contactId, "for user", userId);
 
         const response = await fetch(
-            `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
-            {
-              method: "DELETE",
-            }
+          `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
+          {
+            method: "DELETE",
+          }
         );
 
         const data = await response.json();
         console.log("Server answer", data);
 
         if (response.ok) {
-            alert("Contact successfully deleted.");
+          alert("Contact successfully deleted.");
         }
 
         return data;
-    },
-    
+      },
     },
   };
 };
