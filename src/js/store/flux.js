@@ -62,7 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getContacts: async (userId) => {
-        const store = getStore();
+
         const resp = await fetch(
           `https://playground.4geeks.com/contact/agendas/${userId}/contacts`,
           {

@@ -64,7 +64,7 @@ export const Home = () => {
   return (
     <div className="mt-5">
       <div>
-        <h1 className="text-center">Lista de Contactos</h1>
+        <h1 className="text-center">My Agenda</h1>
 
         {store.contacts.contacts.map((item) => (
           <div className="card mb-0" key={item.id} style={{ width: "auto", margin: "0 30px" }}>
