@@ -23,6 +23,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           console.log("Server answer", data);
+          alert("Contact successfully created.");
+          window.location.href = "/";
           return data;
         } catch (error) {
           console.error("Error saving contact:", error);
