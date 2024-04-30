@@ -76,6 +76,52 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await resp.json();
         setStore({ contacts: data });
       },
+
+      editContact: async (userId, contactId, contactData) => {
+        console.log("Editing contact", contactId, "for user", userId, "with data:", contactData);
+        console.log("UserId", userId.slug)
+
+        const response = await fetch(
+            `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
+            {
+                method: "PUT",
+                body: JSON.stringify(contactData),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    
+        const data = await response.json();
+        console.log("Server answer", data);
+    
+        if (response.ok) {
+            alert("Contact successfully edited.");
+        }
+    
+        return data;
+    },
+
+    deleteContact: async (userId, contactId) => {
+        console.log("Deleting contact", contactId, "for user", userId);
+
+        const response = await fetch(
+            `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
+            {
+              method: "DELETE",
+            }
+        );
+
+        const data = await response.json();
+        console.log("Server answer", data);
+
+        if (response.ok) {
+            alert("Contact successfully deleted.");
+        }
+
+        return data;
+    },
+    
     },
   };
 };
