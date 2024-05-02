@@ -55,10 +55,8 @@ export const Home = () => {
       });
   };
   
-  const handleDeleteContact = (contactId) => {
-    actions.deleteContact(contactId);
-  };
-
+  
+  
   if (!(store.contacts && store.contacts.contacts)) return null;
 
   return (

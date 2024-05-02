@@ -2,10 +2,10 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 
 export const CreateContact = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
 
   console.log("actions", actions);
-  console.log("store", store);
+  // console.log("store", store);
 
   const [contactData, setContactData] = useState({
     name: "",

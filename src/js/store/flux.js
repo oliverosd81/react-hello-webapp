@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      user: null,
+      user: "rikrdoLeal",
       contacts: [],
     },
 
@@ -26,6 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           alert("Contact successfully created.");
           window.location.href = "/";
           return data;
+          
         } catch (error) {
           console.error("Error saving contact:", error);
           throw new Error("Error saving contact");
@@ -114,24 +115,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // función para eliminar un contacto
       // ojo esta función aun no funciona... PENDIENTE
-      deleteContact: async (userId, contactId) => {
-        console.log("Deleting contact", contactId, "for user", userId);
+      deleteContact: async (contactId) => {
+        console.log("Deleting contact", contactId, "for user");
 
         const response = await fetch(
-          `https://playground.4geeks.com/contact/agendas/${userId.slug}/contacts/${contactId}`,
+          `https://playground.4geeks.com/contact/agendas/rikrdoLeal/contacts/${contactId}`,
           {
             method: "DELETE",
+            body: JSON.stringify(),
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
         );
-
-        const data = await response.json();
-        console.log("Server answer", data);
 
         if (response.ok) {
           alert("Contact successfully deleted.");
         }
 
-        return data;
+        return location.reload();
       },
     },
   };
